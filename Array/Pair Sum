@@ -8,7 +8,7 @@ vector<pair<int,int>> pairSum(vector<int> v, int k) {
     unordered_set<int> s;
     vector<pair<int,int>> result;
     for (int i=0; i<v.size(); i++) {
-        if (s.count(k - v[i]) > 0) {
+        if (s.find(k - v[i]) != s.end()) {
             result.push_back(make_pair(k-v[i], v[i]));
         }
         s.insert(v[i]);
