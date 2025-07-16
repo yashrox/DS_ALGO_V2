@@ -1,0 +1,30 @@
+Pair Sum, Using O(n) and Space of O(n)
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector<pair<int,int>> pairSum(vector<int> v, int k) {
+    unordered_set<int> s;
+    vector<pair<int,int>> result;
+    for (int i=0; i<v.size(); i++) {
+        if (s.count(k - v[i]) > 0) {
+            result.push_back(make_pair(k-v[i], v[i]));
+        }
+        s.insert(v[i]);
+    }
+    return result;
+}
+
+int main()
+{
+    vector<int> v {10,5,2,3,-6,9,11};
+    int k = 4;
+    vector<pair<int,int>> result = pairSum(v, k);
+    for (int i=0; i<result.size(); i++) {
+        pair<int,int> p = result[i];
+        cout<<p.first<<" "<<p.second<<endl;
+    }
+ 
+    return 0;
+}
