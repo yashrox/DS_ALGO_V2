@@ -21,7 +21,7 @@ int mountain(vector<int> v) {
             while(j > 0  && v[j] > v[j-1] ) {
                 j--;
             }
-            while(k<n && v[k] > v[k+1]) {
+            while(k<n-1 && v[k] > v[k+1]) {
                 k++;
             }
             maxCount = max(maxCount, (k - j) + 1);
