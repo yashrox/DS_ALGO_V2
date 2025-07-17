@@ -25,6 +25,8 @@ int mountain(vector<int> v) {
                 k++;
             }
             maxCount = max(maxCount, (k - j) + 1);
+            i = k;
+            continue;
         }
         i++;
     }
