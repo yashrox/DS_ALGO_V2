@@ -1,0 +1,40 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int mountain(vector<int> v) {
+    int n = v.size();
+    int i=1;
+    int maxCount = 0;
+    while(i < n-1) {
+        if (v[i-1] < v[i] && v[i] > v[i+1]) {
+            int j = i-1;
+            int k = i+1;
+            while(j > 0  && v[j] > v[j-1] ) {
+                j--;
+            }
+            while(k<n && v[k] > v[k+1]) {
+                k++;
+            }
+            maxCount = max(maxCount, (k - j) + 1);
+        }
+        i++;
+    }
+    return maxCount;
+}
+
+int main()
+{
+    vector<int> v {5,6,1,2,3,4,5,4,3,2,0,1,2,3,-2,4};
+    int result = mountain(v);
+    cout<<result<<endl;
+    return 0;
+}
