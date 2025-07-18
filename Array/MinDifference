@@ -1,0 +1,43 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+pair<int,int> minDifference(vector<int> a, vector<int> b) {
+    sort(a.begin(), a.end());
+    sort(b.begin(), b.end());
+    
+    int minValue = INT_MAX;
+    pair<int,int> p;
+    for (int i=0; i<a.size(); i++) {
+       if (lower_bound(b.begin(), b.end(), a[i]) != b.end() && abs(*lower_bound(b.begin(), b.end(), a[i]) - a[i] ) < minValue)  {
+           minValue = abs(*lower_bound(b.begin(), b.end(), a[i]) - a[i] );
+           p.first = a[i];
+           p.second = *lower_bound(b.begin(), b.end(), a[i]);
+       }
+       if (upper_bound(b.begin(), b.end(), a[i]) != b.end() && abs(*upper_bound(b.begin(), b.end(), a[i]) - a[i] ) < minValue) {
+           minValue = abs(*upper_bound(b.begin(), b.end(), a[i]) - a[i] );
+           p.first = a[i];
+           p.second = *upper_bound(b.begin(), b.end(), a[i]); 
+       }
+    }
+    
+    return p;
+}
+
+
+int main()
+{
+    vector<int> a{23, 5, 10, 17, 30};
+    vector<int> b{26, 134, 135, 14, 19};
+    pair<int,int> result = minDifference(a,b);
+    cout<<result.first<<" "<<result.second<<endl;
+    return 0;
+}
