@@ -1,0 +1,33 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int maxSubArraySum(vector<int> v) {
+    int maxCount = INT_MIN;
+    int currentCount = 0;
+    for (int i=0; i<v.size(); i++) {
+        currentCount += v[i];
+        maxCount = max(maxCount, currentCount);
+        if (currentCount < 0) {
+            currentCount = 0;
+        }
+    }
+    return maxCount;
+}
+
+
+int main()
+{
+    vector<int> v{-1,2,3,4,-2,6,-8,3};
+    int result = maxSubArraySum(v);
+    cout<<result<<endl;
+    return 0;
+}
