@@ -1,0 +1,62 @@
+https://leetcode.com/problems/minimum-window-substring/?envType=study-plan-v2&envId=top-interview-150
+
+
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string containedString(string s1, string s2) {
+    if (s2.length() == 0) {
+        return "";
+    }
+    unordered_map<char, int> m;
+    unordered_map<char, int> temp;
+    for (int i=0; i<s2.length(); i++) {
+        m[s2[i]]++;
+    }
+
+    int i=0;
+    int n=s1.length();
+    int minLength = INT_MAX;
+    string result;
+    int j=i;
+    int currentCount = 0;
+    
+    while(j<n) {
+        temp[s1[j]] += 1;
+
+        if (m.find(s1[j]) != m.end() && temp[s1[j]] <= m[s1[j]]) {
+            currentCount++;
+        }
+        
+        if (currentCount == s2.length()) {
+            while(i < j && temp[s1[i]] > m[s1[i]] )  {
+                temp[s1[i]]--;
+                i++;
+            }
+            int indexCount = j - i + 1;
+            if (indexCount < minLength) {
+                result = s1.substr(i , indexCount);
+                minLength = indexCount;
+            }
+        }
+        j++;
+    }
+    return result;
+}
+
+int main()
+{
+    string s1 = "helliiiio_worlld";
+    string s2 = "llo";
+    cout<<containedString(s1, s2);
+    return 0;
+}
