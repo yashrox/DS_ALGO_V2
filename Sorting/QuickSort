@@ -1,0 +1,45 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+void quickSort(vector<int>& a, int start, int end) {
+    if (start >= end) {
+        return;
+    }
+    int pivot = a[end];
+    int i = start;
+    int j = end-1;
+    while (i<=j) {
+        if (a[i] > pivot) {
+            int temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+            j--;
+            continue;
+        }
+        i++;
+    }
+    a[end] = a[i];
+    a[i] = pivot;
+    
+    // Partition on i
+    quickSort(a, start, i-1);
+    quickSort(a, i+1, end);
+}
+
+int main()
+{
+    vector<int> v{4, 3, 8, 7, 6, 5};
+    quickSort(v, 0, 5);
+    for(int i=0; i<v.size(); i++) {
+        cout<<v[i]<<" ";
+    }
+}
