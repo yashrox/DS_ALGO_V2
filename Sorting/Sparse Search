@@ -1,0 +1,61 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int binarySearch(vector<string> v, int i, int j, string s) {
+    if (i  > j) {
+        return -1;
+    }
+    
+    int mid = (i + j) / 2;
+    
+    if (v[mid] == "") {
+         int leftMid = mid;
+        int rightMid = mid;
+        while(1) {
+            if (leftMid > i && rightMid > j) {
+                return -1;
+            }
+            if (v[leftMid] != "") {
+                mid = leftMid;
+                break;
+            }
+            if (v[rightMid] != "") {
+                mid = rightMid;
+                break;
+            }
+            leftMid--;
+            rightMid++;
+        }
+    }
+    
+    if (v[mid] == s) {
+        return mid;
+    }
+    
+    if (v[mid] < s) {
+        return binarySearch(v, mid+1, j, s );
+    } else {
+        return binarySearch(v, i, mid, s);
+    }
+}
+
+void sparseSearch(vector<string>& v, string s) {
+    int val = binarySearch(v, 0, v.size()-1, s);
+    cout<<" Val "<<val<<endl;
+}
+
+int main()
+{
+    vector<string> v{"a", "", "", "", "b", "", "c", "d", "", "", "e", "f", "g"};
+    sparseSearch(v, "f");
+    return 0;
+}
