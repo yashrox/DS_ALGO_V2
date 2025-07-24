@@ -1,0 +1,36 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+pair<int,int> search(int m, int n, vector<vector<int>> v, int k){
+    //write your code here.
+    int i = 0;
+    int j = n -1;
+    while(i >= 0 && i < m && j>=0 && j < n) {
+        if (v[i][j] == k) {
+            return make_pair(i,j);
+        }
+        if (v[i][j] > k) {
+            j--;
+        } else {
+            i++;
+        }
+    }
+    return make_pair(-1,-1);
+}
+
+int main()
+{
+    vector<vector<int>> v{ {1,4,9}, {2,5,10}, {6,7,11} };
+    pair<int,int> result = search(3,3,v,10);
+    cout<<result.first<<" "<<result.second<<endl;
+    return 0;
+}
