@@ -1,0 +1,24 @@
+#include<vector>
+using namespace std;
+
+void swap(vector<int> &v, int i , int j) {
+    int temp = v[i];
+    v[i] = v[j];
+    v[j] = temp;
+}
+
+vector<int> sortBalls(vector<int> v){
+    //sort the balls in place in a single pass (O(N) time, O(1) space)
+    int size = v.size();
+    int zero = 0, one = 0, two = size - 1;
+    while(one<=two) {
+        switch(v[one]) {
+            case 0:  { swap(v , zero++, one++); break; }
+            case 1: { one++; break; }
+            case 2: {swap(v, one, two--); break;}
+        }
+    }    
+    
+    
+    return v;
+}
