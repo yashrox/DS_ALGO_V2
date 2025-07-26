@@ -1,0 +1,56 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+bool isAngry(vector<int> v, int val, int b) {
+    int count = b - 1;
+    int i = 1;
+    int lastIndex = 0;
+    while(i < v.size() && count > 0) {
+        if (v[i] - v[lastIndex] >= val) {
+            count--;
+            lastIndex = i;
+        }
+        i++;
+    }
+    
+    if (count == 0) {
+        return true;
+    }
+    return false;
+}
+
+int angryBird(vector<int> v, int b) {
+    int n = v.size();
+    
+    int start = 0;
+    int end = v[n-1] - v[0];
+    int result = INT_MIN;
+    
+    while(start<=end) {
+        int mid = (start+end)/2;
+        if(isAngry(v, mid, b)) {
+            start = mid + 1;
+            result = max(result, mid);
+        } else {
+            end = mid - 1;
+        }
+    }
+    
+    return result;
+}
+
+int main()
+{
+    vector<int> v{1,2,4,8,9};
+    cout<<angryBird(v, 3);
+    return 0;
+}
