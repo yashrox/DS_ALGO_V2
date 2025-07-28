@@ -1,0 +1,36 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+
+int subsetSum(vector<int> v, int sum, int index) {
+    
+    if (sum == 0) {
+        return 1;
+    }
+    
+    if (index >= v.size() || sum < 0) {
+        return 0;
+    }
+    
+    int include =  subsetSum(v, sum - v[index], index + 1);
+
+    int exclude = subsetSum(v, sum, index + 1);
+    
+    return include + exclude;
+}
+
+int main()
+{
+    vector<int> v{10,1,15,6,19,20};
+    cout<<subsetSum(v, 16, 0);
+    return 0;
+}
