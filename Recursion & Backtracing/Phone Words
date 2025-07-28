@@ -1,0 +1,26 @@
+https://leetcode.com/problems/letter-combinations-of-a-phone-number/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution {
+public:
+    void phoneCombination(string digits, string temp, vector<string> phone, vector<string>& result) {
+        if (digits.length() == 0) {
+            result.push_back(temp);
+            return;
+        }
+        int digit = digits[0] - '0';
+        string phoneWord = phone[digit];
+        for(int i=0; i<phoneWord.length(); i++) {
+            phoneCombination(digits.substr(1), temp + phoneWord[i], phone, result);
+        }
+    }
+
+    vector<string> letterCombinations(string digits) {
+        vector<string> result;
+        if (digits.length() == 0) {
+            return result;
+        }
+        vector<string> phone {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        phoneCombination(digits, "", phone, result);
+        return result;
+    }
+};
