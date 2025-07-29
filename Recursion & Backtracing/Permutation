@@ -1,0 +1,30 @@
+https://leetcode.com/problems/permutations/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution {
+private:
+    void swap(vector<int>& nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+public:
+    void permutations(vector<int>& nums, int index, vector<int>& tempResult, vector<vector<int>>& result) {
+        if(index == nums.size()) {
+            result.push_back(tempResult);
+            return;
+        }
+        for(int i=index; i<nums.size(); i++) {
+            swap(nums, i, index);
+            tempResult[index] = nums[index];
+            permutations(nums, index+1, tempResult, result);
+            swap(nums,i,index);
+        }
+    }
+
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> result;
+        vector<int> tempResult(nums.size());
+        permutations(nums, 0, tempResult, result);
+        return result;
+    }
+};
