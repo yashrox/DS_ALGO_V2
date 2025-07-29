@@ -57,14 +57,10 @@ int gameofcoins(vector<int> v, int i, int j, int turn) {
         int takeLast = v[j] + gameofcoins(v, i, j-1, turn+1);
         return max(takeFirst, takeLast);
     } else {
-        if (v[i] < v[j]) {
-            return gameofcoins(v, i, j-1, turn+1);
-        } else {
-            return gameofcoins(v, i+1, j, turn+1)
-        }
+        int pickLeft = gameofcoins(v, i + 1, j, true);
+        int pickRight = gameofcoins(v, i, j - 1, true);
+        return min(pickLeft, pickRight);
     }
-    
-    
 }
 
 int main()
