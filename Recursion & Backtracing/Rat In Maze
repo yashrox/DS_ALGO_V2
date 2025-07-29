@@ -1,0 +1,70 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector<vector<int>> number;
+
+
+bool ratInMaze(vector<vector<char>> v, int i, int j, int n, vector<int>& result) {
+    if (i < 0 || j < 0|| i >= n || j >= n) {
+        return false;
+    }
+   
+    if (i == n-1 && j == n-1) {
+        return true;
+    }
+    
+    bool isFound;
+    // botton
+    if (i+1 < n && v[i+1][j] == 'o') {
+        isFound = ratInMaze(v, i+1, j , n, result);
+        if (isFound) {
+            result.push_back(number[i][j]);
+            return true;
+        }
+    }
+    
+    // right
+    if (j+1 < n && v[i][j+1] == 'o') {
+        isFound = ratInMaze(v, i, j+1, n, result);
+        if (isFound) {
+            result.push_back(number[i][j]);
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+
+int main()
+{
+    vector<vector<char>> v{{'o', 'o', 'x', 'o'}, 
+                           {'o', 'x', 'o', 'o'}, 
+                           {'o', 'o', 'o', 'x'}, 
+                           {'x', 'x', 'o', 'o'}};
+    int n = 4;
+    int total = 1;
+    for(int i=0; i<n; i++) {
+        vector<int> temp;
+        for (int j=0; j<n; j++) {
+            temp.push_back(total++);
+        }
+        number.push_back(temp);
+    }
+    vector<int> result;
+    cout<<ratInMaze(v, 0, 0, n, result)<<endl;
+    reverse(result.begin(), result.end());
+    for(int i=0; i<result.size(); i++) {
+        cout<<result[i]<<" ";
+    }
+    return 0;
+}
