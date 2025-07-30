@@ -1,0 +1,28 @@
+https://leetcode.com/problems/combination-sum/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution {
+public:
+    void combination(vector<int>& candidates, int target, vector<vector<int>>&  result, int index, vector<int>& tempResult)  {
+        if (index >= candidates.size() || target < 0) {
+            return;
+        }
+        if (target == 0) {
+            result.push_back(tempResult);
+            return;
+        }
+
+        for (int i=index; i<candidates.size(); i++) {
+            tempResult.push_back(candidates[i]);
+            combination(candidates, target-candidates[i], result, i, tempResult);
+            tempResult.pop_back();
+        }
+
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> result;
+        vector<int> tempResult;
+        combination(candidates, target, result, 0, tempResult);
+        return result;
+    }
+};
