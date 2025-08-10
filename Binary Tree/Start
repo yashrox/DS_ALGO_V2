@@ -1,1 +1,150 @@
+/******************************************************************************
 
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Node {
+    public:
+    Node* left;
+    Node* right;
+    int data;
+    Node(int data) {
+        this->data = data;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+
+class TreeCode {    
+public:
+    Node* root = NULL;
+    void levelOrderTraverser(Node* root) {
+        if (root == NULL) {
+            return;
+        }
+        queue<Node*> q;
+        q.push(root);
+        while(!q.empty()) {
+            Node* temp = q.front();
+            cout<<temp->data<<" ";
+            if (temp->left != NULL) {
+                q.push(temp->left);
+            }
+            if (temp->right != NULL) {
+                q.push(temp->right);
+            }
+            q.pop();
+        }
+    }
+    
+    void insert() {
+        int val;
+        
+        queue<Node*> q;
+        
+        if (root == NULL) {
+            cout<<"Root"<<endl;
+            cin>>val;
+            root = new Node(val);
+            q.push(root);
+        }
+        while(!q.empty()) {
+            Node* temp = q.front();
+            cout<<"Enter Left "<<temp->data<<endl;
+            cin>>val;
+            if (val != -1) {
+                temp->left = new Node(val);
+                q.push(temp->left);
+            }
+            cout<<"Enter Right "<<temp->data<<endl;
+            cin>>val;
+            if (val != -1) {
+                temp->right = new Node(val);
+                q.push(temp->right);
+            }
+            q.pop();
+        }
+    }
+    
+    // Trie
+    Node* insertUsingList(vector<int>& v) {
+        if (v.size() == 0) {
+            return NULL;
+        }
+        queue<pair<Node*,int>> q;
+        Node* newRoot = new Node(v[0]);
+        q.push({newRoot, 0});
+        while(!q.empty()) {
+            cout<<"going"<<endl;
+            pair<Node*, int> temp = q.front();
+            q.pop();
+            int tempVal = 2 * temp.second;
+            int left = tempVal + 1;
+            int right = tempVal + 2;
+            Node* tempNode = temp.first;
+            if (v[left] != -1 && left < v.size()) {
+                tempNode->left = new Node(v[left]);
+                q.push({tempNode->left, left});
+            }
+            if (v[right] != -1 && right < v.size()) {
+                tempNode->right = new Node(v[right]);
+                q.push({tempNode->right, right});
+            }
+        }
+        return newRoot;
+    }
+    
+    // Diameter
+    int height(Node* root) {
+        if (root == NULL) {
+            return 0;
+        }
+        return 1 + max(height(root->left), height(root->right));
+    }
+    
+    int diameter(Node* root) {
+        if (root == NULL) {
+            return 0;
+        }
+        int left = diameter(root->left);
+        int right = diameter(root->right);
+        return max((height(root->left) + height(root->right)), max(left, right));
+    }
+    
+    pair<int,int> diameterOptimized(Node* root) {
+        if (root == NULL) {
+            return {0,0};
+        }
+        pair<int,int> left = diameterOptimized(root->left);
+        pair<int,int> right = diameterOptimized(root->right);
+        int heightValue = 1 + max(left.second, right.second);
+        int diameterValue = max(left.second+right.second, max(left.first, right.first));
+        return {diameterValue, heightValue};
+    }
+    
+};
+
+
+int main()
+{
+    
+    TreeCode t1;
+    t1.insert();
+    t1.levelOrderTraverser(t1.root);
+    cout<<endl;
+    vector<int> v{1,2,3,4,5,-1,6,-1,-1,7,-1,-1,-1,-1,-1};
+    Node* newRoot = t1.insertUsingList(v);
+    t1.levelOrderTraverser(newRoot);
+    
+    // Dimaeter
+    cout<<t1.diameter(t1.root);
+    cout<<endl;
+    cout<<t1.diameterOptimized(t1.root).first<<endl;
+    return 0;
+}
